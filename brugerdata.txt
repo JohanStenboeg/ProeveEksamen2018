@@ -1,0 +1,13 @@
+Ved personfølsomme oplysninger,
+anbefales det man krypterer sin data
+Der findes mange forskellige måder at gøre dette på
+en meget anvendt type er AES (Advanced Encryption Standard)
+der bruger en symetrisk krypterinsalgoritme. 
+Den bruger en blok-kryptering, der krypterer
+dataen i en fast størrelses blok ad gangen
+i forhold til andre der krypterer bit for bit.
+Hvis personfølsomme data bliver hacked, så
+når det er krypteret kan hackeren ikke bruge
+informationen til noget, før han har dekrypteret det
+Dette er en meget svær process, hvis man ikke
+ved hvilken teknologi der er brugt til at kryptere dataen.
