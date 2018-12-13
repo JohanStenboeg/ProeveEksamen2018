@@ -15,6 +15,10 @@ app.use(bodyParser.json());
 //require mysql
 var mysql = require('mysql');
 
+//get request
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + '/index.html');
+})
 
 //Laver connection til DB 
 var con = mysql.createConnection({
@@ -23,7 +27,7 @@ var con = mysql.createConnection({
     password: "password"
 });
 
-//get request 2, hent pærerne
+//get request, hent informationen 
 app.get('/hent', function (req, res) {
 
     con.connect(function (err) {
@@ -43,7 +47,25 @@ app.get('/hent', function (req, res) {
     });
 
 })
-//starter serveren på port 8080
+app.post('/opret', function(req, res){
+    con.connect(function (err) {
+        //Tjekker for fejl, hvis ingen fejl skriver connected. 
+        if (err) throw err;
+        console.log("Connected!");
+        con.query("use db_becbank;", function (err, result) {
+            if (err) throw err;
+            console.log("connected");
+        });
+        con.query("insert into becbank(navn, efternavn, kontonummer, medarbejder, pw, saldo01, rente01, saldo02, rente02, saldo03, rente03) values ('"+req.body.navn+"','"+req.body.efternavn+"',"+req.body.kontonummer+","+req.body.medarbejder+",'"+req.body.pw+"',"+req.body.saldo01+","+req.body.rente01+","+req.body.saldo02+","+req.body.rente02+","+req.body.saldo03+","+req.body.rente03+");", function (err, result) {
+            if (err) throw err;
+            console.log("Inserted new data into mysql db");
+            res.send(result);
+        });
+    });
+})
+
+
+//starter serveren på port 5050
 http.listen(5050, function () {
     console.log('listening on *:5050');
-});
+})

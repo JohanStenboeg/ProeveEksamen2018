@@ -7,32 +7,47 @@
     <title>proeveeksamen2018</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        body{
+            background-color:rgb(157, 157, 255)
+        }
         table {
             font-family: arial, sans-serif;
             border-collapse: collapse;
             width: 100%;
+            border-width: 5px;
+            
         }
 
         td,
         th {
-            border: 1px solid white;
-            text-align: left;
+            border: 1px solid black;
+            text-align: center;
             padding: 8px;
+            border-radius: 5px;
         }
 
         tr:nth-child(even) {
             background-color: red;
         }
+        tr:nth-child(1){
+            background-color:aqua;
+        }
+        tr:nth-child(odd){
+            background-color:blue;
+        }
     </style>
 </head>
 
 <body>
-        
-    <input type="button" value="Click Me" onclick="hentBankInformation();">
+    <h2 id="h2Frontpage">Velkommen til Bec-Bank</h2>
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <table style="width:100%"">
+        <ul id="liste"></ul>
+    </table>
     <script>
         hentBankInformation();
-
         function hentBankInformation() {
+            console.log("funktion starter");
             var xmlhttp = new XMLHttpRequest();
 
             xmlhttp.onreadystatechange = function () {
@@ -42,8 +57,7 @@
                     //laver det om til object
                     var obj = JSON.parse(this.response)
 
-                    var startappend =
-                        "<tr><th>navn</th><th>efternavn</th><th>kontonummer</th><th>medarbejder</th><th>pw</th><th>saldo01</th><th>rente01</th><th>saldo02</th><th>rente02</th><th>saldo03</th><th>rente03</th>"
+                    var startappend = "<tr><th>Navn</th><th>Efternavn</th><th>Kontonummer</th><th>Medarbejder</th><th>Saldo01</th><th>Rente01</th><th>Saldo02</th><th>Rente02</th><th>Saldo03</th><th>Rente03</th></tr> "
                     $('#liste').append($(startappend));
                     for (let index = 0; index < obj.length; index++) {
                         var start = '<tr>';
@@ -58,8 +72,7 @@
                         var saldo03 = '<td>' + obj[index].saldo03 + ' </td>'
                         var rente03 = '<td>' + obj[index].rente03 + ' </td>'
                         var slut = '</tr>'
-                        var finallinje = start + navn + efternavn + kontonummer + medarbejder + saldo01 + rente01 +
-                            saldo02 + rente02 + saldo03 + rente03 + slut;
+                        var finallinje = start+navn+efternavn+kontonummer+medarbejder+saldo01+rente01+saldo02+rente02+saldo03+rente03+slut;
                         $('#liste').append($(finallinje));
                     }
                 }
@@ -67,6 +80,7 @@
             xmlhttp.open("GET", "http://localhost:5050/hent", true);
             xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             xmlhttp.send();
+            
         }
     </script>
 
