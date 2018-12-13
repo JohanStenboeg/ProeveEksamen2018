@@ -1,0 +1,12 @@
+Et eksempel på et deployment er vores sprog app
+Den er hostet over google cloud servers
+Linket til den er : https://sprogapp.appspot.com/login
+Her kan der oprettes en bruger eller logges ind. 
+Evt. prøv at oprette en bruger eller log ind med: 
+navn: rose
+Kode:rose
+Så kommer man ind på hjemmeskærmen
+
+En hjemmeside jeg har lavet, og hostet over google cloud igen er: 
+https://storage.googleapis.com/jstenboeg-hjemmeside/index.html
+Hvor man kan se nogle forskellige faner, lidt om mig og et ikke så færdigt vendespil
