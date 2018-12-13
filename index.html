@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>proeveeksamen2018</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid white;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="button" value="Click Me" onclick="hentBankInformation();">
+    <script>
+        hentBankInformation();
+
+        function hentBankInformation() {
+            var xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log("virker")
+                    console.log("response" + this.response);
+                    //laver det om til object
+                    var obj = JSON.parse(this.response)
+
+                    var startappend =
+                        "<tr><th>navn</th><th>efternavn</th><th>kontonummer</th><th>medarbejder</th><th>pw</th><th>saldo01</th><th>rente01</th><th>saldo02</th><th>rente02</th><th>saldo03</th><th>rente03</th>"
+                    $('#liste').append($(startappend));
+                    for (let index = 0; index < obj.length; index++) {
+                        var start = '<tr>';
+                        var navn = '<td>' + obj[index].navn + ' </td>'
+                        var efternavn = '<td>' + obj[index].efternavn + ' </td>'
+                        var kontonummer = '<td>' + obj[index].kontonummer + ' </td>'
+                        var medarbejder = '<td>' + obj[index].medarbejder + ' </td>'
+                        var saldo01 = '<td>' + obj[index].saldo01 + ' </td>'
+                        var rente01 = '<td>' + obj[index].rente01 + ' </td>'
+                        var saldo02 = '<td>' + obj[index].saldo02 + ' </td>'
+                        var rente02 = '<td>' + obj[index].rente02 + ' </td>'
+                        var saldo03 = '<td>' + obj[index].saldo03 + ' </td>'
+                        var rente03 = '<td>' + obj[index].rente03 + ' </td>'
+                        var slut = '</tr>'
+                        var finallinje = start + navn + efternavn + kontonummer + medarbejder + saldo01 + rente01 +
+                            saldo02 + rente02 + saldo03 + rente03 + slut;
+                        $('#liste').append($(finallinje));
+                    }
+                }
+            }
+            xmlhttp.open("GET", "http://localhost:5050/hent", true);
+            xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xmlhttp.send();
+        }
+    </script>
+
+</body>
+
+</html>

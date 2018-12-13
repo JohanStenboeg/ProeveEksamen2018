@@ -1,0 +1,42 @@
+CREATE SCHEMA `db_becbank` ;
+
+CREATE TABLE `db_becbank`.`becbank` (
+  `navn` VARCHAR(45) NULL,
+  `efternavn` VARCHAR(45) NULL,
+  `kontonummer` INT NULL,
+  `medarbejder` TINYINT NULL,
+  `password` VARCHAR(45) NULL,
+  UNIQUE INDEX `kontonummer_UNIQUE` (`kontonummer` ASC));
+
+select * from becbank;
+
+ALTER TABLE `db_becbank`.`becbank` 
+CHANGE COLUMN `password` `pw` VARCHAR(45) NULL DEFAULT NULL ;
+
+INSERT INTO becbank(navn, efternavn, kontonummer, medarbejder, pw) values('navn01', 'efternavn01', 10011001, 1, 'pw01')
+INSERT INTO becbank(navn, efternavn, kontonummer, medarbejder, pw) values('navn02', 'efternavn02', 10011002, 0, 'pw02')
+
+CREATE TABLE `db_becbank`.`becbankkonti` (
+  `kontonummer` INT NOT NULL,
+  `saldo01` DOUBLE NULL,
+  `rente01` DOUBLE NULL,
+  `saldo02` DOUBLE NULL,
+  `rente02` DOUBLE NULL,
+  PRIMARY KEY (`kontonummer`),
+  UNIQUE INDEX `kontonummer_UNIQUE` (`kontonummer` ASC) VISIBLE);
+
+ALTER TABLE `db_becbank`.`becbank` 
+CHANGE COLUMN `kontonummer` `kontonummer` INT(11) NOT NULL ,
+ADD PRIMARY KEY (`kontonummer`);
+;
+
+ALTER TABLE `db_becbank`.`becbank` 
+ADD COLUMN `saldo01` DOUBLE NULL AFTER `pw`,
+ADD COLUMN `rente01` DOUBLE NULL AFTER `saldo01`,
+ADD COLUMN `saldo02` DOUBLE NULL AFTER `rente01`,
+ADD COLUMN `rente02` DOUBLE NULL AFTER `saldo02`,
+ADD COLUMN `saldo03` DOUBLE NULL AFTER `rente02`,
+ADD COLUMN `rente03` DOUBLE NULL AFTER `saldo03`;
+
+
+INSERT INTO becbank(navn, efternavn, kontonummer, medarbejder, pw, saldo01, rente01, saldo02, rente02, saldo03, rente03) values('navn04', 'efternavn04', 10011004, 0, 'pw04', 100, 2, 23300, 2, 100099, 2);
