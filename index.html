@@ -98,7 +98,7 @@
                     }
                 }
             }
-            xmlhttp.open("GET", "http://localhost:5050/hent", true);
+            xmlhttp.open("GET", "http://localhost:8080/hent", true);
             xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             xmlhttp.send();
 
@@ -125,7 +125,7 @@
                     document.getElementById("idbrugerid").innerHTML = obj2[0].rente;
                 }
             }
-            xmlhttp2.open("POST", "http://localhost:5050/hentkonti", true);
+            xmlhttp2.open("POST", "http://localhost:8080/hentkonti", true);
             xmlhttp2.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             xmlhttp2.send(params);
 

@@ -30,9 +30,9 @@ route(app)
 
 
 
-//starter serveren på port 5050
-http.listen(5050, function () {
-    console.log('listening on *:5050');
+//starter serveren på port 8080
+http.listen(8080, function () {
+    console.log('listening on *:8080');
 })
 /*
 //Laver connection til DB 
