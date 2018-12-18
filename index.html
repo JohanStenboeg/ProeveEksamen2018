@@ -3,19 +3,19 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>proeveeksamen2018</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body{
-            background-color:rgb(157, 157, 255)
+        body {
+            background-color: rgb(157, 157, 255)
         }
+
         table {
             font-family: arial, sans-serif;
             border-collapse: collapse;
             width: 100%;
             border-width: 5px;
-            
+
         }
 
         td,
@@ -29,23 +29,50 @@
         tr:nth-child(even) {
             background-color: red;
         }
-        tr:nth-child(1){
-            background-color:aqua;
+
+        tr:nth-child(1) {
+            background-color: aqua;
         }
-        tr:nth-child(odd){
-            background-color:blue;
+
+        tr:nth-child(odd) {
+            background-color: blue;
+        }
+
+        .onClickTal {
+            cursor: pointer;
+        }
+
+        .onClickTal:hover {
+            background-color: rgb(194, 46, 46)
         }
     </style>
 </head>
 
 <body>
     <h2 id="h2Frontpage">Velkommen til Bec-Bank</h2>
-        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <table style="width:100%"">
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
+
+    <table style="width:100%">
         <ul id="liste"></ul>
     </table>
+    <table style="width:50%">
+        <tr>
+            <th>Kontonummer</th>
+            <th>Saldo</th>
+            <th>Rente</th>
+        </tr>
+        <tr>
+            <td id="idbrugertype">data her</td>
+            <td id="idnavn">data her</td>
+            <td id="idbrugerid">data her</td>
+        </tr>
+    </table>
     <script>
+        var startappend = "<tr><th>Navn</th><th>Efternavn</th><th>Kontonummer</th></tr>"
+        $('#liste').append($(startappend));
         hentBankInformation();
+
         function hentBankInformation() {
             console.log("funktion starter");
             var xmlhttp = new XMLHttpRequest();
@@ -53,26 +80,20 @@
             xmlhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     console.log("virker")
-                    console.log("response" + this.response);
+                    console.log("response fra bruger" + this.response);
                     //laver det om til object
                     var obj = JSON.parse(this.response)
 
-                    var startappend = "<tr><th>Navn</th><th>Efternavn</th><th>Kontonummer</th><th>Medarbejder</th><th>Saldo01</th><th>Rente01</th><th>Saldo02</th><th>Rente02</th><th>Saldo03</th><th>Rente03</th></tr> "
-                    $('#liste').append($(startappend));
+
                     for (let index = 0; index < obj.length; index++) {
                         var start = '<tr>';
                         var navn = '<td>' + obj[index].navn + ' </td>'
                         var efternavn = '<td>' + obj[index].efternavn + ' </td>'
-                        var kontonummer = '<td>' + obj[index].kontonummer + ' </td>'
-                        var medarbejder = '<td>' + obj[index].medarbejder + ' </td>'
-                        var saldo01 = '<td>' + obj[index].saldo01 + ' </td>'
-                        var rente01 = '<td>' + obj[index].rente01 + ' </td>'
-                        var saldo02 = '<td>' + obj[index].saldo02 + ' </td>'
-                        var rente02 = '<td>' + obj[index].rente02 + ' </td>'
-                        var saldo03 = '<td>' + obj[index].saldo03 + ' </td>'
-                        var rente03 = '<td>' + obj[index].rente03 + ' </td>'
+                        var kontonummer = '<td id="' + obj[index].kontonummer +
+                            '" class = "onClickTal" onclick = "hentKontiInformation(this.id)" >' + obj[
+                                index].kontonummer + ' </td>'
                         var slut = '</tr>'
-                        var finallinje = start+navn+efternavn+kontonummer+medarbejder+saldo01+rente01+saldo02+rente02+saldo03+rente03+slut;
+                        var finallinje = start + navn + efternavn + kontonummer + slut;
                         $('#liste').append($(finallinje));
                     }
                 }
@@ -80,7 +101,34 @@
             xmlhttp.open("GET", "http://localhost:5050/hent", true);
             xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             xmlhttp.send();
-            
+
+        }
+
+
+
+        function hentKontiInformation(idknr) {
+            var params = "idknr=" + idknr + ";";
+            console.log(idknr)
+            console.log("funktion starter");
+            var xmlhttp2 = new XMLHttpRequest();
+            console.log("readystate = " + this.readyState);
+            console.log("status = " + this.status)
+            xmlhttp2.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log("virker")
+                    console.log("response fra konti" + this.response);
+                    //laver det om til object
+                    var obj2 = JSON.parse(this.response)
+
+                    document.getElementById("idbrugertype").innerHTML = obj2[0].kontonummer;
+                    document.getElementById("idnavn").innerHTML = obj2[0].saldo;
+                    document.getElementById("idbrugerid").innerHTML = obj2[0].rente;
+                }
+            }
+            xmlhttp2.open("POST", "http://localhost:5050/hentkonti", true);
+            xmlhttp2.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xmlhttp2.send(params);
+
         }
     </script>
 
